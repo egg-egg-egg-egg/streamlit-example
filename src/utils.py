@@ -40,9 +40,9 @@ def read_json_file(file_path):
     
 
 # 示例使用
-file_path = "example.json"
-json_data = read_json_file(file_path)
-if json_data:
-    print("成功读取JSON数据：", json_data)
-else:
-    print("读取JSON文件失败。")
+# file_path = "example.json"
+# json_data = read_json_file(file_path)
+# if json_data:
+#     print("成功读取JSON数据：", json_data)
+# else:
+#     print("读取JSON文件失败。")
