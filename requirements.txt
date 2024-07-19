@@ -1,1 +1,4 @@
 streamlit
+pygments
+matplotlib
+streamlit_monaco

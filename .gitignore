@@ -1,1 +1,11 @@
 update_students.py
+
+./.streamlit/secrets.toml
+
+./config
+
+./data
+
+./assets
+
+./src/__pycache__
