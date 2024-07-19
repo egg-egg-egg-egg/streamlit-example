@@ -39,3 +39,4 @@ decrypted_name = decrypt_name(encrypted_name)
 print(f"还原后的姓名: {decrypted_name}")
 
 # TODO 加密解密前后必须保持一致，否则无法还原。
+# 本地保留一份明文，用于测试加密解密后是否一致
