@@ -1,6 +1,6 @@
 update_students.py
 
-./.streamlit/secrets.toml
+.streamlit/secrets.toml
 
 ./config
 
