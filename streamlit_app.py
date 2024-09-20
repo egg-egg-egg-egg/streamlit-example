@@ -1,6 +1,3 @@
-"""
-用于文件下载
-"""
 import json
 import os
 import time
