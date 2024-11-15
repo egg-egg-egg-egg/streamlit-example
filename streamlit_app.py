@@ -1,6 +1,3 @@
-"""
-用于文件下载
-"""
 import json
 import os
 import time
@@ -9,6 +6,7 @@ import time
 import streamlit as st
 from streamlit_monaco import st_monaco
 from src.use_pygment import code_to_image
+from src import page_link_from_flowUs
 # import streamlit.components.v1 as components
 # from src import utils as u
 
@@ -61,7 +59,7 @@ def user_view(cpw):
 		# 口令👌：{cpw}
 		""")
 		show_img(cpw_path)
-		
+		st.balloons()
 
 @st.experimental_fragment
 def show_img(cpw_dirpath:str):
@@ -169,9 +167,10 @@ def main():
 		st.session_state.cpw = st.text_input("填写口令",type="password",key="home_cpw")
 
 	if st.session_state.cpw == st.secrets["admin_pw"]: # 初始口令如果是管理员口令，则进入管理员界面
-		temp_st.empty()
+		temp_st.empty() # 删除这个组件
 		update_imag(st.session_state.cpw)
-		
+	elif st.session_state.cpw == "hlsyyds":
+		page_link_from_flowUs.link_button()
 	elif st.session_state.cpw != "":
 		user_view(st.session_state.cpw)
 	
