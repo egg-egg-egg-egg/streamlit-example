@@ -61,7 +61,8 @@ def user_view(cpw):
 		show_img(cpw_path)
 		st.balloons()
 
-@st.experimental_fragment
+
+@st.fragment
 def show_img(cpw_dirpath:str):
 	"""
 	cpw_dirpath: 基路径+课堂上的口令得到的一个目录
