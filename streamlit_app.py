@@ -90,7 +90,7 @@ def show_img(cpw_dirpath:str):
 		file_path = os.path.join(cpw_dirpath, default_imag_format.format(input_text))
 		st.image(file_path, caption=f'{input_text}题代码',width=700)
 
-@st.experimental_dialog("上传代码")
+@st.dialog("上传代码")
 def dalog_uploadIamg(set_cpw_path:str):
 	# 对话框中上传代码
 
