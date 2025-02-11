@@ -1,12 +1,9 @@
-update_students.py
-
 .streamlit/secrets.toml
 
 config
 
-data
-
-./assets
+data/inTeach_img/abcd
+data/inTeach_img/c++
 
 src/__pycache__
 
