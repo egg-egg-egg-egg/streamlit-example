@@ -23,7 +23,7 @@ from src import page_link_from_flowUs
 # def run():
 # 	iframe_src = "https://flowus.cn/share/6781489a-d317-4da7-b07d-7414ab3def45?code=DD8PQT&embed=true"
 # 	components.iframe(iframe_src,height=1000,width=1000)  # 你可以为组件添加高度和宽度
-path = "./data/inTeach_img"
+ImgPath = "./data/inTeach_img"
 
 st.set_page_config(
 	page_title="let me see see",  # 页面标题
@@ -33,7 +33,7 @@ st.set_page_config(
 	menu_items={
 		# 'Get Help': 'https://github.com/',
 		# 'Report a bug': "https://github.com/",
-		'About': "黄老师耗时一坤天完成的小网站",
+		'About': "黄老师耗时一坤时完成的小网站",
 	}
 )
 
@@ -51,7 +51,7 @@ def save_iamg(imag:bytes,file_path:str):
 
 
 def user_view(cpw):
-	cpw_path = os.path.join(path,cpw)
+	cpw_path = os.path.join(ImgPath,cpw)
 	if not os.path.exists(cpw_path):
 		st.toast(f'`{cpw}`口令不存在，请询问老师',icon='🐷')
 	else:
@@ -134,7 +134,7 @@ def update_imag(cpw:str|None):
 			set_cpw = st.text_input("设置口令",key="setCPW")
 			enter_cpw = st.button("确认口令","confirmSetCPW")
 			if enter_cpw and set_cpw:
-				set_cpw_path = os.path.join(path, f"{set_cpw}")
+				set_cpw_path = os.path.join(ImgPath, f"{set_cpw}")
 				st.session_state.set_cpw = set_cpw
 				st.session_state.set_cpw_path = set_cpw_path
 				is_create_cpw = create_folder(set_cpw_path)
