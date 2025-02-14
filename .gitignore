@@ -2,11 +2,11 @@
 
 config
 
-data/inTeach_img/abcd
-data/inTeach_img/c++
+data/inTeach_img/*
+data/c++
 
 src/__pycache__
 
 src/execsandbox.py
 
-src/utils.py
+src/experimentalFunction
