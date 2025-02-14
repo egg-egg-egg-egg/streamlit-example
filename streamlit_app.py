@@ -91,7 +91,7 @@ def show_img(cpw_dirpath:str):
 		st.image(file_path, caption=f'{input_text}题代码',width=700)
 
 @st.dialog("上传代码")
-def dalog_uploadIamg(set_cpw_path:str):
+def dalog_uploadIamg(cur_set_path:str):
 	# 对话框中上传代码
 
 	with st.expander("输入代码"):
@@ -100,7 +100,7 @@ def dalog_uploadIamg(set_cpw_path:str):
 		code_text = st_monaco(height="300px", language="cpp",theme="vs-dark",minimap=True)
 		if  code_text and problem_num_code and st.button("点击创建",help="输入题目名和代码后提交",use_container_width=True,key="submitCodeText"):
 			# 保存到本地
-			file_path = os.path.join(set_cpw_path, f"{problem_num_code}.png")
+			file_path = os.path.join(cur_set_path, f"{problem_num_code}.png")
 			highlighted_code = code_to_image(code_text,file_path,language="cpp",font_name="./src/fonts/msyh.ttc")
 			# 将高亮的代码写入文件
 			save_iamg(highlighted_code,file_path)
@@ -111,7 +111,7 @@ def dalog_uploadIamg(set_cpw_path:str):
 		problem_num_imag = st.text_input("输入题目名",key="through_imag")
 		imag = st.file_uploader("上传图片",type=['png','jpg','jpeg'])
 		if  imag and problem_num_imag and st.button("点击创建",help="输入题目名和代码后提交",use_container_width=True,key="submitCodeImag"):
-			file_path = os.path.join(set_cpw_path, f"{problem_num_imag}.png")
+			file_path = os.path.join(cur_set_path, f"{problem_num_imag}.png")
 			# imag 保存到本地
 			save_iamg(imag.getvalue(),file_path)
 			
@@ -123,37 +123,41 @@ def dalog_uploadIamg(set_cpw_path:str):
         # st.rerun()
 	
 
-def update_imag(cpw:str|None):
+def admin_view(cpw:str|None):
 	"""
 	管理员界面，可设置口令和添加代码图片，使用设置的目录作为show_imag的路径
 	"""
 
 	
 	with st.sidebar:
+		set_cpw = None
+		cur_set_path = None
 		with st.popover("配置",use_container_width=True):
 			set_cpw = st.text_input("设置口令",key="setCPW")
 			enter_cpw = st.button("确认口令","confirmSetCPW")
+			cur_set_path = os.path.join(ImgPath, f"{set_cpw}") if set_cpw else None
 			if enter_cpw and set_cpw:
-				set_cpw_path = os.path.join(ImgPath, f"{set_cpw}")
-				st.session_state.set_cpw = set_cpw
-				st.session_state.set_cpw_path = set_cpw_path
-				is_create_cpw = create_folder(set_cpw_path)
+				
+				is_create_cpw = create_folder(cur_set_path)
 				if is_create_cpw:
-					st.info(f'设置成功 {set_cpw_path}',icon='✔')
+					st.info(f'设置成功 {cur_set_path}',icon='✔')
 				else:
-					st.info(f'口令已存在 {set_cpw_path}',icon='🈶')
+					st.info(f'口令已存在 {cur_set_path}',icon='🈶')
 			elif enter_cpw:
 				st.warning(f'口令不能为空',icon='⚠️')
 		# 输入组件
-		if st.button("提交代码",type='primary',use_container_width=True,key="submitUI") and st.session_state.get("set_cpw_path",None):
-			dalog_uploadIamg(st.session_state.set_cpw_path)
+		is_submit = st.button("提交代码",type='primary',use_container_width=True,key="submitUI")
+		if is_submit and cur_set_path:
+			dalog_uploadIamg(cur_set_path)
+		elif is_submit:
+			st.warning(f'请先设置口令',icon='⚠️')
 	
-	if st.session_state.get("set_cpw_path",None):
+	if cur_set_path:
 		st.write(f"""
-		# 口令：{st.session_state.set_cpw}
+		# 口令：{set_cpw}
 		""")
-		show_img(st.session_state.set_cpw_path)
-
+		show_img(cur_set_path)
+	print(cur_set_path,set_cpw)
 
 def main():
 	
@@ -169,7 +173,7 @@ def main():
 
 	if st.session_state.cpw == st.secrets["admin_pw"]: # 初始口令如果是管理员口令，则进入管理员界面
 		temp_st.empty() # 删除这个组件
-		update_imag(st.session_state.cpw)
+		admin_view(st.session_state.cpw)
 	elif st.session_state.cpw == "hlsyyds":
 		page_link_from_flowUs.link_button()
 	elif st.session_state.cpw != "":
