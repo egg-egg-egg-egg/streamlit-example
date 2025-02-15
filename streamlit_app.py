@@ -70,9 +70,6 @@ def user_view(cpw):
 			pass
 			
 		show_img(cpw_path)
-		pht = st.camera_input("拍照")
-		if pht is not None:
-			st.write(pht)
 
 
 @st.fragment
