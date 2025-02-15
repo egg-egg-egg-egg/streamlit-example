@@ -43,23 +43,49 @@ def create_folder(folder_path):
 		return True
 	else :
 		return False
+	
+
 def save_iamg(imag:bytes,file_path:str):
 	with open(file_path, "wb") as f:
 		f.write(imag)
 	st.toast(f'创建成功 {file_path}',icon='😁')
 	
+def click_game():
+	if 'stu_click' not in st.session_state:
+		st.session_state.stu_click = {
+			"count":0,
+			"lim":10
+		}
+	
+	if st.button("摸鱼🐟"):
+		st.session_state.stu_click["count"] += 1
 
+	lim = st.session_state.stu_click["lim"]
+	cc = st.session_state.stu_click["count"]
+	stu_click = st.session_state.stu_click
+	if cc >= lim and cc != 0:
+		st.toast(f'恭喜你! 你被恭喜了', icon='🎉')
+		st.session_state.stu_click["count"] = 0
+		st.session_state.stu_click["lim"] *= 2
+	st.progress(stu_click["count"] / stu_click["lim"])
 
 def user_view(cpw):
 	cpw_path = os.path.join(path,cpw)
 	if not os.path.exists(cpw_path):
 		st.toast(f'`{cpw}`口令不存在，请询问老师',icon='🐷')
 	else:
-		st.write(f"""
-		# 口令👌：{cpw}
-		""")
+		col1, col2 = st.columns([3, 1])
+		with col1:
+			st.write(f"""
+			# 口令👌：{cpw}
+			""")
+		with col2:
+			pass
+			
 		show_img(cpw_path)
-		st.balloons()
+		pht = st.camera_input("拍照")
+		if pht is not None:
+			st.write(pht)
 
 
 @st.fragment
@@ -114,13 +140,6 @@ def dalog_uploadIamg(set_cpw_path:str):
 			file_path = os.path.join(set_cpw_path, f"{problem_num_imag}.png")
 			# imag 保存到本地
 			save_iamg(imag.getvalue(),file_path)
-			
-	
-	
-
-    # if st.button("提交"):
-        # st.session_state.vote = {"item": item, "reason": reason}
-        # st.rerun()
 	
 
 def update_imag(cpw:str|None):
