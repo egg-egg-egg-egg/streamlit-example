@@ -39,7 +39,9 @@ def code_to_image(code: str, file_path: str, language: str = "cpp",font_name:str
         # font_name='Consolas', 
         font_name=font_name, 
         font_size=20,
-        line_numbers=True)
+        line_numbers=True,
+        style="monokai",
+    )
     highlighted_code = highlight(code, lexer, formatter)
 
     return highlighted_code
@@ -60,8 +62,16 @@ if __name__ == "__main__":
     }
 
     '''
-    path = r"C:\Users\86180\Workspace\idea\ClassroomCodeRepository\data\c++\problems\img"
-    import os
+    
+    code_py = """
+    # 来电中文
+    def hello_world():
+        print("hello world")
+"""
+    path = r"./"
+    # import os
 
     file_path = os.path.join(path, f'{2}.png')
-    code_to_image(code,file_path)
+    imag = code_to_image(code_py, file_path, language="python")  # Corrected function name
+    from utils import save_image
+    save_image(imag, file_path)
