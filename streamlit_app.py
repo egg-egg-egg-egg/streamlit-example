@@ -7,7 +7,11 @@ import streamlit as st
 from streamlit_monaco import st_monaco
 from src.use_pygment import code_to_image
 from src import page_link_from_flowUs
-from src.utils import create_folder,save_image,get_subdirectory_names
+from src.utils import (create_folder,
+						save_image,
+						get_subdirectory_names,
+						get_file_names)
+
 # import streamlit.components.v1 as components
 # from src import utils as u
 
@@ -37,6 +41,8 @@ st.set_page_config(
 		'About': "黄老师耗时一坤时完成的小网站",
 	}
 )
+
+@st.fragment
 def click_game():
 	if 'stu_click' not in st.session_state:
 		st.session_state.stu_click = {
@@ -67,6 +73,7 @@ def user_view(cpw):
 			# 口令👌：{cpw}
 			""")
 		with col2:
+			click_game()
 			pass
 			
 		show_img(cpw_path)
@@ -80,15 +87,12 @@ def show_img(cpw_dirpath:str):
 	可以选择题目，查看代码
 	"""
 	# 确保可选项可以实时更新
-	try:
-		imag_optinos = map(lambda x: x.split('.')[0],os.listdir(cpw_dirpath))
-	except Exception as e:
-		imag_optinos = []
+	imag_optinos = get_file_names(cpw_dirpath)
 	# st单选box
 	input_text = None
 	if imag_optinos:
 		input_text = st.selectbox(
-		"输入要查看的题目名",
+		"选择要查看的题目名",
 		imag_optinos,
 		index=None,
 		placeholder="",

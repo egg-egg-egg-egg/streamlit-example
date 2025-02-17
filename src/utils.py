@@ -3,7 +3,6 @@ import json
 
 import streamlit as st
 
-@st.cache_data
 def get_file_names(directory:str):
     """
     获取指定目录下的所有文件名（不包括子目录中的文件）。
