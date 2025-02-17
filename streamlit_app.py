@@ -57,6 +57,7 @@ def click_game():
 	cc = st.session_state.stu_click["count"]
 	stu_click = st.session_state.stu_click
 	if cc >= lim and cc != 0:
+		# TODO 更多的互动
 		st.toast(f'恭喜你! 你被恭喜了', icon='🎉')
 		st.session_state.stu_click["count"] = 0
 		st.session_state.stu_click["lim"] *= 2
